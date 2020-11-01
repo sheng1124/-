@@ -1,0 +1,2142 @@
+Import "ShanHai.lua"
+
+Dim 畫面特徵表 = {"策略地圖":{"特徵圖名稱" : "withdraw2.png", "範圍" : 打包成範圍(93, 82, 848, 529), "精度" : 0.8}}
+畫面特徵表["首頁"] = {"特徵圖名稱" : "mainMemu.png", "範圍" : 打包成範圍(553, 271, 740, 324), "精度" : 0.8}
+畫面特徵表["常駐地圖選關"] = {"特徵圖名稱":"CommissionA.png", "範圍":打包成範圍(673, 453, 820, 536), "精度":0.8}
+畫面特徵表["EX地圖選關"] = {"特徵圖名稱" : "ex.png", "範圍" : 打包成範圍(94,49,148,79), "精度" : 0.8}
+畫面特徵表["SP地圖選關"] = {"特徵圖名稱" : "sp.png", "範圍" : 打包成範圍(94,49,148,79), "精度" : 0.8}
+畫面特徵表["委託"] = {"特徵圖名稱" : "Commission2.png", "範圍" : 打包成範圍(85,4,139,33), "精度" : 0.8}
+畫面特徵表["出擊等候區"] = {"特徵圖名稱":"fight.png", "範圍":打包成範圍(773, 448, 933, 500), "精度":0.8}
+畫面特徵表["遭遇伏擊"] = {"特徵圖名稱":"skip.png", "範圍":打包成範圍(731,327, 867,384), "精度":0.8}
+畫面特徵表["戰鬥評價"] = {"特徵圖名稱" : "battleRank.png", "範圍" : 打包成範圍(453,259,581,293), "精度" : 0.9}
+畫面特徵表["獲得道具"] = {"特徵圖名稱" : "getItemB.png", "範圍" : 打包成範圍(360,144,587,192), "精度" : 0.8}
+畫面特徵表["戰鬥數據"] = {"特徵圖名稱":"battleAnalayis.png", "範圍":打包成範圍(527, 460, 896, 520), "精度":0.8}
+畫面特徵表["戰鬥數據2"] = {"特徵圖名稱" : "battleAgain.png", "範圍" : 打包成範圍(527,460,896,520), "精度" : 0.8}
+畫面特徵表["獲得訊息"] = {"特徵圖名稱" : "EmergeMessage.png", "範圍" : 打包成範圍(150,69,601,315), "精度" : 0.8}
+畫面特徵表["關卡確認前往"] = {"特徵圖名稱" : "goStage1.png", "範圍" : 打包成範圍(639,365,789,412), "精度" : 0.8}
+畫面特徵表["艦隊選擇"] = {"特徵圖名稱":"goStage2.png", "範圍":打包成範圍(710,398, 904,496), "精度":0.8}
+畫面特徵表["艦隊選擇2"] = {"特徵圖名稱":"goStage3.png", "範圍":打包成範圍(710,398, 904,496), "精度":0.8}
+畫面特徵表["遊戲進入畫面"] = {"特徵圖名稱" : "enter.png", "範圍" : 打包成範圍(907,486,954,530), "精度" : 0.8}
+畫面特徵表["帳號登入"] = {"特徵圖名稱" : "login.png", "範圍" : 打包成範圍(466,120,565,158), "精度" : 0.8}
+畫面特徵表["選擇帳戶"] = {"特徵圖名稱" : "choiceAccount.png", "範圍" : 打包成範圍(414,181,550,225), "精度" : 0.8}
+畫面特徵表["系統公告"] = {"特徵圖名稱" : "annoce.png", "範圍" : 打包成範圍(93,27,152,65), "精度" : 0.8}
+畫面特徵表["特別作戰"] = {"特徵圖名稱" : "specialAction.png", "範圍" : 打包成範圍(80,1,180,33), "精度" : 0.8}
+
+dim 右下角最大邊界值 = Array(959,539)
+
+Function main2()
+	dim x = Array() 
+	TracePrint (UBound(x)) 
+
+	dim a = Array(1, 2, 3, 4)
+	dim b = Array(3, 5, 6, 8, 9, 4)
+	dim c = 合併列表(a, b)
+	
+	For Each a In c
+		TracePrint a
+	Next
+	
+End Function
+
+Function main()
+//	選擇模式
+	TracePrint "開始選擇模式"
+	dim 腳本模式 = 選擇腳本模式()
+//	設定參數
+	TracePrint "開始設定選項"
+	Dim 選項 = 設定選項(腳本模式)
+	TracePrint "確認所有選項"
+	印出列表所有值(選項, 1)
+//  執行腳本
+	執行腳本(腳本模式, 選項)
+	
+	
+	Delay 1000
+	dim x = 取得現在的畫面()
+	TracePrint x
+End Function
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    執行腳本    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 執行腳本(腳本模式, 選項)
+	Select Case 腳本模式
+		Case "撈船"
+			Call 撈船腳本(選項)
+		Case "自動委託"
+			Call 自動委託腳本(選項)
+		Case "撈船輔助"
+			Call 輔助撈船腳本(選項)
+		Case "共鬥(特殊演習)"
+			Call 共鬥腳本(選項)
+		Case "畫面偵測模式"
+			Call 畫面偵測腳本(選項)
+	End Select
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    執行腳本    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    共鬥腳本    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 共鬥腳本(選項)
+	Dim 次數 = 選項["共鬥選項"]["執行次數"]
+	While 次數 <> 0
+		dim 畫面 = 取得現在的畫面()
+		Delay 1000
+		TracePrint "取得的畫面是", 畫面
+		Select Case 畫面
+			Case "首頁"
+				TracePrint "前往特別演習"
+				Call 前往特別演習()
+			Case "特別作戰"
+				TracePrint "共鬥選難度"
+				Call 共鬥選難度(選項)
+			Case "出擊等候區"
+				TracePrint "開始出擊"
+				dim 是否在戰鬥 = 開始出擊()
+			Case "關卡確認前往"
+				TracePrint "關卡確認立刻前往"
+				Call 關卡確認立刻前往()
+			Case "艦隊選擇","艦隊選擇2"
+				TracePrint "艦隊選擇立刻前往"
+				Call 艦隊選擇立刻前往()
+			Case "戰鬥評價"
+				TracePrint "評價結束，點擊繼續"
+				次數 = 次數 - 1
+				切換到戰鬥數據頁面2()
+			Case "系統公告"
+				TracePrint "關閉公告"
+				Call 關閉公告()
+			Case "獲得道具"
+				TracePrint "獲得道具 點擊繼續"
+				獲得道具點擊繼續()
+			Case "戰鬥數據2"
+				TracePrint "戰鬥數據頁面，點擊繼續"
+				戰鬥數據點擊繼續2()
+			Case "獲得訊息"
+				TracePrint "獲得訊息進行處理"
+				dim 訊息種類 = 判斷何種訊息()
+				處理訊息(訊息種類, 選項)
+		End Select
+		
+	Wend
+End Function
+
+Function 共鬥選難度(選項)
+	Select Case 選項["共鬥選項"]["難度選擇"]
+		Case "E.X."
+			擬人化點擊(828,132,800)
+		Case "困難"
+			擬人化點擊(820,226,800)
+		
+	End Select
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    共鬥腳本    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    撈船腳本    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 撈船腳本(選項)
+	TracePrint "開始執行自動撈船"
+	While True
+		dim 畫面 = 取得現在的畫面()
+		Delay 1000
+		TracePrint "取得的畫面是", 畫面
+		Select Case 畫面
+			Case "首頁"
+				TracePrint "前往常駐地圖選關"
+				Call 前往常駐地圖選關()
+			Case "常駐地圖選關", "EX地圖選關", "SP地圖選關"
+				TracePrint "選關"
+				Call 選關(選項)
+			Case "關卡確認前往"
+				TracePrint "關卡確認立刻前往"
+				Call 關卡確認立刻前往()
+			Case "艦隊選擇"
+				TracePrint "艦隊選擇立刻前往"
+				Call 艦隊選擇立刻前往()
+			Case "系統公告"
+				TracePrint "關閉公告"
+				Call 關閉公告()
+		End Select
+		
+	Wend
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    撈船腳本    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    關卡確認 艦隊選擇    vvvvvvvvvvvvvvvvvvvvvvvv
+
+Function 關卡確認立刻前往()
+	dim 座標 = 尋找附件座標(畫面特徵表["關卡確認前往"])
+	擬人化點擊(座標[1], 座標[2], 2500)	
+End Function
+
+Function 艦隊選擇立刻前往()
+	dim 座標 = 尋找附件座標(畫面特徵表["艦隊選擇"])
+	If (座標[1] = -1) Then 
+		座標 = 尋找附件座標(畫面特徵表["艦隊選擇2"])
+	End If
+	擬人化點擊(座標[1], 座標[2], 2500)
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    關卡確認 艦隊選擇    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    選關    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 章節樣板範圍 = 打包成範圍(87,41,155,82)
+Dim 章節樣板列表 = {"CH1":{"key":"CH1","特徵圖名稱":"ch1.png","順序" : 1,"關卡":Array(Array(102,371), Array(337,230), Array(486,424), Array(588,157)),"性質" : "常駐", "範圍" :章節樣板範圍,"精度":0.8}}
+章節樣板列表["CH2"] = {"key":"CH2","特徵圖名稱":"ch2.png","順序" : 2, "關卡":Array(Array(602,371), Array(556,168), Array(205,229), Array(276,436)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH3"] = {"key":"CH3","特徵圖名稱":"ch3.png","順序" : 3, "關卡":Array(Array(293,194), Array(160,398), Array(589,128), Array(453,301)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH4"] = {"key":"CH4","特徵圖名稱":"ch4.png","順序" : 4, "關卡":Array(Array(169,261), Array(316,386), Array(610,433), Array(591,244)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH5"] = {"key":"CH5","特徵圖名稱":"ch5.png","順序" : 5, "關卡":Array(Array(178,303), Array(634,432), Array(549,303), Array(425,189)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH6"] = {"key":"CH6","特徵圖名稱":"ch6.png","順序" : 6, "關卡":Array(Array(679,404), Array(514,283), Array(316,184), Array(212,347)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH7"] = {"key":"CH7","特徵圖名稱":"ch7.png","順序" : 7, "關卡":Array(Array(149,386), Array(328,161), Array(615,237), Array(712,372)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH8"] = {"key":"CH8","特徵圖名稱":"ch8.png","順序" : 8, "關卡":Array(Array(406,169), Array(198,294), Array(246,456), Array(579,373)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["CH9"] = {"key":"CH9","特徵圖名稱":"ch9.png","順序" : 9, "關卡":Array(Array(177,205), Array(277,398), Array(576,221), Array(680,414)),"性質" : "常駐", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["S.P."] = {"key":"S.P.","特徵圖名稱":"sp.png","順序" : 1, "關卡":Array(Array(196,228), Array(273,432), Array(0,0), Array(0,0)),"性質" : "活動", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["E.X.1"] = {"key":"E.X.1","特徵圖名稱":"ex.png","順序" : 1, "關卡":Array(Array(239,202), Array(369,446), Array(638,229), Array(0,0)),"性質" : "活動", "範圍":章節樣板範圍, "精度":0.8}
+章節樣板列表["E.X.2"] = {"key":"E.X.2","特徵圖名稱":"ex.png","順序" : 2, "關卡":Array(Array(224,316), Array(521,440), Array(595,199), Array(0,0)),"性質" : "活動", "範圍":章節樣板範圍, "精度":0.8}
+Dim 上一章按鈕樣板 = {"特徵圖名稱" : "upChapter.png", "範圍" : 打包成範圍(22,263, 47,295), "精度" : 0.8}
+Dim 下一章按鈕樣板 = {"特徵圖名稱" : "nextChapter.png", "範圍" : 打包成範圍(902,264, 926,292), "精度" : 0.8}
+
+Function 選關(選項)
+	//選項["關卡選項"]["章節"]
+	//選項["關卡選項"]["關卡"]
+	Dim 現在的關卡 = 判斷現在進入的章節()
+	Dim 目標關卡 = 章節樣板列表[選項["關卡選項"]["章節"]]
+	dim 關卡int = int(選項["關卡選項"]["關卡"])
+	//印出列表所有值 現在的關卡, 1
+	If (現在的關卡 = NULL) Then 
+		TracePrint "無法判斷現在在哪個關卡"
+		Exit Function
+	End If
+	//印出列表所有值(目標關卡,1)
+
+	If (選項["關卡選項"]["章節"] <> 現在的關卡[1]["key"]) Then 
+		Dim 是否切換成功 = False
+		TracePrint "不在目標章節中，開始切換"
+		
+		If 選項["撈船選項"]["地圖選擇"] = "活動關卡" Then 
+			If 現在的關卡[1]["性質"] <> "活動" Then 
+				TracePrint "切換至活動地圖"
+				切換至活動地圖()
+				現在的關卡 = 判斷現在進入的章節()
+				If (現在的關卡 = NULL) Then 
+					TracePrint "無法判斷現在在哪個關卡"
+					Exit Function
+				End If
+				If (選項["關卡選項"]["章節"] = 現在的關卡[1]["key"]) Then 
+					點擊關卡 (目標關卡["關卡"][關卡int])
+					Exit Function
+				End If
+			End If
+		End If
+		//印出列表所有值 現在的關卡, 1
+		是否切換成功 = 切換章節到(章節樣板列表[選項["關卡選項"]["章節"]]["順序"], 現在的關卡[1]["順序"])
+		If (是否切換成功 = False) Then 
+			TracePrint "切換失敗，請找出原因"
+			Exit Function
+		End If
+	End If
+	點擊關卡(目標關卡["關卡"][關卡int])
+End Function
+
+Function 切換至活動地圖()
+	dim 活動地圖座標 = Array(902, 149)
+	擬人化點擊(活動地圖座標[1], 活動地圖座標[2], 2500)
+End Function
+
+Function 點擊關卡(A)
+	擬人化點擊(A[1],A[2], 2000)
+End Function
+
+Function 下一章()
+	擬人化點擊(915,283, 2500)
+End Function
+
+Function 上一章()
+	擬人化點擊(37, 275, 2500)
+End Function
+
+Function 切換章節到(目標章節順序, 現在章節順序)
+	For 10
+		For Abs(目標章節順序 - 現在章節順序)
+			If (目標章節順序 > 現在章節順序) Then 
+				下一章()
+			Else 
+				上一章()
+			End If
+		Next
+		Dim 目前章節 = 判斷現在進入的章節()
+		現在章節順序 = 目前章節[1]["順序"]
+		If (目標章節順序 = 現在章節順序) Then 
+			切換章節到 = True
+			Exit Function
+		End If
+	Next
+	切換章節到 = False
+
+End Function
+
+Function 判斷現在進入的章節()
+	dim 列表 = 尋找附件列表中匹配的物件(章節樣板列表)
+	判斷現在進入的章節 = 列表
+	If UBOUND(列表) + 1 > 1 Then 
+		Dim 座標 = 尋找附件座標(上一章按鈕樣板)
+		If 列表[1]["順序"] = 1 Then 
+			Dim 上篇 = Array(列表[1])
+			Dim 下篇 = Array(列表[2])
+		Else 
+			上篇 = Array(列表[2])
+			下篇 = Array(列表[1])
+		End If
+			
+		If 座標[1] > -1 Then 
+			判斷現在進入的章節 = 下篇
+		Else 
+			判斷現在進入的章節 = 上篇
+		End If
+	End IF
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    選關    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    訊息頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+dim 訊息樣板特徵表 = {"船屋已滿" : {"特徵圖名稱" : "sort.png", "範圍" : 打包成範圍(251,341,717,417), "精度" : 0.8}}
+//訊息樣板特徵表["我知道了"] = {"特徵圖名稱" : "iknow.png", "範圍" : 打包成範圍(408,365,559,418), "精度" : 0.8}
+訊息樣板特徵表["知道了"] = {"特徵圖名稱":"know.png", "範圍":打包成範圍(408, 365, 559, 418), "精度":0.8}
+訊息樣板特徵表["消耗"] = {"特徵圖名稱":"comsume.png", "範圍":打包成範圍(504,349,680,449), "精度":0.8}
+訊息樣板特徵表["一般訊息"] = {"特徵圖名稱":"message_A.png", "範圍":打包成範圍(284, 349, 677, 413), "精度":0.8}
+訊息樣板特徵表["緊急委託"] = {"特徵圖名稱":"comfirmX2.png", "範圍":打包成範圍(256,348,701,413), "精度":0.8}
+dim 確定物件 = {"特徵圖名稱":"comfirmX1.png", "範圍":打包成範圍(508,342,677,415), "精度":0.8}
+dim 確定物件2 = {"特徵圖名稱":"comfirmX2.png", "範圍":打包成範圍(256,348,701,413), "精度":0.8}
+
+Function 判斷何種訊息()
+	dim 訊息列表 = 尋找附件列表中匹配的物件(訊息樣板特徵表)
+	If (UBOUND(訊息列表) < 0) Then 
+		TracePrint "沒有對應的訊息處理方式"
+		Exit Function
+	End If
+	
+	判斷何種訊息 = 訊息列表[1]["物件名稱"]
+End Function
+
+Function 處理訊息(訊息種類, 選項)
+	Select Case 訊息種類
+		Case "船屋已滿"
+			TracePrint "船屋已滿"
+		Case "知道了"
+			點擊知道了()
+		Case "消耗"
+			If (選項["共鬥選項"] <> null and 選項["共鬥選項"]["是否消耗卷"]) Then 
+				點擊消耗()
+			Else 
+				點擊不消耗()
+			End If
+		Case "一般訊息"
+			點擊確定()
+		Case "緊急委託"
+			點擊確定()
+	End Select
+	
+End Function
+
+Function 點擊消耗()
+	擬人化點擊(597,380, 800)
+End Function
+
+Function 點擊不消耗()
+	擬人化點擊(372,379, 800)
+End Function
+
+Function 點擊知道了()
+	dim 座標 = 尋找附件座標(訊息樣板特徵表["知道了"]) 
+	擬人化點擊(座標[1], 座標[2], 1000)
+End Function
+
+Function 點擊確定()
+	dim 座標 = 尋找附件座標(確定物件)
+	If 座標[1] < 0 Then 
+		座標 = 尋找附件座標(確定物件2)
+	End If
+	擬人化點擊(座標[1], 座標[2], 1000)
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    訊息頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    輔助撈船腳本    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 輔助撈船腳本(選項)
+	TracePrint "開始執行輔助撈船"
+	Dim 出擊記錄 = {"出擊次數":0}
+	While True
+		dim 畫面 = 取得現在的畫面()
+		Delay 1000
+		TracePrint "                  "
+		TracePrint "                  "
+		TracePrint "現在的畫面是", 畫面
+		Select Case 畫面
+			Case "出擊等候區"
+				TracePrint "開始出擊"
+				開始出擊()
+			Case "戰鬥評價"
+				TracePrint "評價結束，點擊繼續"
+				切換到戰鬥數據頁面()
+			Case "獲得道具"
+				TracePrint "獲得道具 點擊繼續"
+				獲得道具點擊繼續()
+			Case "戰鬥數據","戰鬥數據2"
+				TracePrint "戰鬥數據頁面，點擊繼續"
+				戰鬥數據點擊繼續()
+			Case "獲得訊息"
+				TracePrint "獲得訊息進行處理"
+				dim 訊息種類 = 判斷何種訊息()
+				處理訊息 訊息種類, 選項
+			Case "艦隊選擇", "艦隊選擇2"
+				出擊記錄 = {"出擊次數":0, "當前艦隊":0}
+				艦隊選擇立刻前往()
+			Case "策略地圖"
+				Delay 4000
+				TracePrint "開始掃描"
+				//全盤掃描(選項, 出擊記錄)
+				殲滅魔王(出擊記錄, Array(Array(0,0,0),  Array(-1, 3)))
+			Case "系統公告"
+				TracePrint "關閉公告"
+				Call 關閉公告()
+		End Select
+	Wend
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    輔助撈船腳本    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    策略地圖操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 棋盤範圍 = 打包成範圍(93, 42, 959,470)
+Dim 棋盤格長度 = 50
+Dim 查看詳情樣版 = {"特徵圖名稱" : "checkDetail.png", "範圍" : 打包成範圍(878,198,959,297), "精度" : 0.8}
+Dim 水平黑框樣板 =   {"特徵圖名稱" : "bar.png",  "範圍" : 棋盤範圍, "精度" : 1,"大小" : Array(40, 4)}
+Dim 左下角黑框樣板 = {"特徵圖名稱" : "bar1.png", "範圍" : 棋盤範圍, "精度" : 1,"大小" : Array(21, 8)}
+Dim 右下角黑框樣板 = {"特徵圖名稱" : "bar2.png", "範圍" : 棋盤範圍, "精度" : 1,"大小" : Array(22, 11)}
+Dim 敵人物件列表 = {"s10" : {"特徵圖名稱" : "s10.png", "範圍" : 棋盤範圍,"偏色":"181C00", "精度" : 1, "大小" : Array(20,20)}}
+dim 黃色小兵 = {"大小": 30, "顏色範圍":"94EBFF-321400", "特徵顏色數量" : 40, "排除條件函數":"黃色小兵排除函數", "座標修正" :Array(40,30)}
+Dim 紅色小兵 = {"大小": 30, "顏色範圍":"8482FF-181C00", "特徵顏色數量" : 64, "排除條件函數":"黃色小兵排除函數", "座標修正" :Array(40,30)}
+Dim 魔王 = {"大小": 30, "顏色範圍":"4A49FF-190C00", "特徵顏色數量" : 80, "排除條件函數":"魔王排除函數", "座標修正" :Array(0,0)}
+Dim 空襲物件 = {"特徵圖名稱" : "airRiad.png", "範圍" : 打包成範圍(0,191,959,333), "精度" : 1}
+Dim 沒有路線物件 = {"特徵圖名稱" : "nopath.png", "範圍" : 打包成範圍(358,205,565,260), "精度" : 0.8}
+Dim 艦隊二物件 = {"特徵圖名稱" : "fleet02.png", "範圍" : 打包成範圍(152,50,175,79), "精度" : 0.8} 
+Dim 艦隊一物件 = {"特徵圖名稱" : "fleet01.png", "範圍" : 打包成範圍(152,50,175,79), "精度" : 0.8} 
+dim 狀況物件字典={"沒有路線" : 沒有路線物件}
+狀況物件字典["遭遇空襲"] = 空襲物件
+狀況物件字典["抵達座標"] = 畫面特徵表["出擊等候區"]
+狀況物件字典["遭遇伏擊"] = 畫面特徵表["遭遇伏擊"]
+狀況物件字典["獲得道具"] = 畫面特徵表["獲得道具"]
+狀況物件字典["出現訊息"] = 畫面特徵表["獲得訊息"]
+
+Function db()
+	TracePrint "db"
+	While 1
+		dim x = 尋找列表中所有附件座標(敵人物件列表)
+		印出列表所有值 x, 1
+		Delay 2000
+	Wend
+	
+	
+End Function
+
+Function 全盤掃描(選項, 出擊記錄)
+	dim 目標座標, 地圖物件字典, 狀況, 發現魔王 = False, 掃描初始參數 = Array(0,0,0) , 掃描進度 = Array(-1, 3)
+	TracePrint "出擊記錄"
+	印出列表所有值(出擊記錄, 1)
+	關掉查看詳情()
+	檢查艦隊狀況(出擊記錄, 選項["戰鬥選項"])	
+
+	If 選項["戰鬥選項"]["敵人選擇優先度"] <> "所有敵人" and int(出擊記錄["出擊次數"]) >= int(選項["戰鬥選項"]["打多少小兵出現boss"]) Then 
+		TracePrint "尋找魔王 ", 選項["戰鬥選項"]["打多少小兵出現boss"]
+		發現魔王 = 殲滅魔王(出擊記錄, Array(掃描初始參數, 掃描進度))
+		If 發現魔王 Then 
+			Exit Function
+		End If
+	End If
+	TracePrint "尋找小兵 "
+	殲滅小兵(出擊記錄, Array(掃描初始參數, 掃描進度))
+End Function
+
+Function 檢查艦隊狀況(出擊記錄, 戰鬥選項)
+	If 出擊記錄["當前艦隊"] = 0 and 出擊記錄["當前艦隊"] <> -1 Then 
+		dim 現在艦隊 = 切換至艦隊(戰鬥選項["選擇哪一隊打先鋒"])
+		出擊記錄["當前艦隊"] = 現在艦隊
+	ElseIf 出擊記錄["當前艦隊"] = 戰鬥選項["選擇哪一隊打先鋒"] Then
+		Dim 彈藥數量 = {1 : 戰鬥選項["fleet1_彈藥數量"], 2 : 戰鬥選項["fleet2_彈藥數量"]}
+		If (Int(出擊記錄["出擊次數"]) >= Int(彈藥數量[出擊記錄["當前艦隊"]])) Then 
+			TracePrint "彈藥已盡，切換艦隊"
+			點擊切換艦隊()
+			出擊記錄["當前艦隊"] = 判斷目前的艦隊()
+			出擊記錄["地圖掃描進度"] = Null
+		End If
+	End If
+End Function
+
+Function 切換至艦隊(目標艦隊)
+	Dim 當前艦隊 = 判斷目前的艦隊()
+	TracePrint "當前艦隊 ", 當前艦隊, " to ", "目標艦隊: ", 目標艦隊
+	If 當前艦隊 <> 目標艦隊 Then 
+		點擊切換艦隊()
+	End If
+	If 判斷目前的艦隊() <> 目標艦隊 Then 
+		TracePrint "切換艦隊失敗，可能不存在"
+		切換至艦隊 = -1
+	Else 
+		切換至艦隊 = 目標艦隊
+	End If
+End Function
+
+Function 點擊切換艦隊()
+	擬人化點擊(742,510, 3000)
+End Function
+
+Function 判斷目前的艦隊()
+	Dim 艦隊一座標 = 尋找附件座標 (艦隊一物件)
+	dim 艦隊二座標 = 尋找附件座標 (艦隊二物件)
+	Dim 當前艦隊 = -1
+	If 艦隊一座標[1] < 0 and 艦隊二座標[1] > -1 Then 
+		當前艦隊 = 2
+	ElseIf 艦隊一座標[1] > -1 and 艦隊二座標[1] < 0 Then
+		當前艦隊 = 1
+	Else 
+		TracePrint "無法判斷目前的艦隊", 艦隊一座標[1]," ", 艦隊二座標[1]
+	End If
+	判斷目前的艦隊 = 當前艦隊
+End Function
+
+Function 殲滅魔王(出擊記錄, 掃描參數)
+	Dim 地圖物件字典 = _全盤掃描_鎖定地圖物件("魔王列表", 出擊記錄, 掃描參數)
+	If 地圖物件字典["地圖掃描進度"]["有沒有地圖物件"] = True Then 
+		TracePrint "測試魔王可不可以接觸"
+		dim 狀況 = 測試目標("boss優先", 地圖物件字典)
+		TracePrint "處裡魔王遭遇狀況"
+		出擊狀況處裡(狀況, 出擊記錄, 地圖物件字典)
+		If 狀況 = "沒有目標" Then 
+			殲滅魔王 = False
+		Else 
+			殲滅魔王 = True
+		End If
+	End If
+End Function
+
+Function 殲滅小兵(出擊記錄, 掃描參數)
+	Dim 地圖物件字典 = _全盤掃描_鎖定地圖物件("小兵列表", 出擊記錄, 掃描參數)
+	TracePrint "測試敵人可不可以接觸"
+	dim 狀況 = 測試目標("所有敵人", 地圖物件字典)
+	TracePrint "處裡敵人遭遇狀況"
+	出擊狀況處裡(狀況, 出擊記錄, 地圖物件字典)
+End Function
+
+Function 測試目標(敵人選擇優先度, 地圖物件字典)
+	TracePrint "選擇目標 ", 敵人選擇優先度
+	dim 目標座標 = 選擇目標(敵人選擇優先度, 地圖物件字典)
+	TracePrint "選擇可點擊的座標: ", 目標座標[1]," ", 目標座標[2], "進行路線測試"
+	Dim 狀況 = 測試路線(目標座標)
+	While 狀況 = "沒有路線" or 狀況 = "沒有移動"//切換目標
+		TracePrint "沒有路線或沒移動，選擇最近的目標"
+		//目標座標 = 選擇最近的目標(目標座標, 地圖物件字典)
+		TracePrint "切換至最近的目標 ", 目標座標[1], " ", 目標座標[2]
+		狀況 = 測試路線(目標座標)
+	Wend
+	While 狀況 = "遭遇空襲"
+		TracePrint "遭遇空襲"
+		Delay 4000
+		狀況 = 測試路線(目標座標)
+	Wend
+	測試目標 = 狀況
+End Function
+
+Function 測試路線(目標座標)
+	If 目標座標[1] < 1 Then //掃描最後都沒有or都沒路線
+		測試路線 = "沒有目標"
+		Exit Function
+	End If
+	tap 目標座標[1], 目標座標[2]
+	dim 狀況座標 = Array(-1, -1)
+	For 80
+		For Each key , obj In 狀況物件字典
+			狀況座標 = 尋找附件座標(obj)
+			If 狀況座標[1] > 0 Then 
+				測試路線 = key
+				Exit Function
+			End If
+		Next
+		Delay 100
+	Next
+	Dim 策略地圖畫面座標 = 尋找附件座標(畫面特徵表["策略地圖"])
+	If (策略地圖畫面座標[1] < 0) Then 
+		測試路線 = "畫面錯誤"
+	Else 
+		測試路線 = "沒有移動"
+	End If	
+End Function
+
+Function 出擊狀況處裡(狀況, 出擊記錄, 地圖物件字典)
+	Select Case 狀況
+		Case "抵達座標"
+			TracePrint "抵達座標，出擊次數 + 1"
+			出擊記錄["出擊次數"] = 出擊記錄["出擊次數"] + 1
+			出擊記錄["地圖掃描進度"] = Null
+		Case "沒有目標" //目標附近的怪都沒有路徑
+			TracePrint "沒有目標"
+			dim 新參數 = _鎖定地圖物件_設定新參數(地圖物件字典["地圖掃描進度"]["掃描初始參數"], 地圖物件字典["地圖掃描進度"]["掃描進度"])
+			出擊記錄["地圖掃描進度"] = {"掃描初始參數" : 新參數[1], "掃描進度" : 新參數[2], "有沒有地圖物件": False}
+		Case "畫面錯誤"
+		 	TracePrint "畫面錯誤"
+			出擊記錄["地圖掃描進度"] = 地圖物件字典["地圖掃描進度"]
+		Case "獲得道具"
+			TracePrint "獲得道具點擊繼續"
+			獲得道具點擊繼續()
+			出擊記錄["地圖掃描進度"] = 地圖物件字典["地圖掃描進度"]
+		Case "遭遇伏擊"
+			TracePrint "遭遇伏擊，點擊規避"
+			Dim 規避座標 = 尋找附件座標(畫面特徵表["遭遇伏擊"])
+			擬人化點擊 規避座標[1], 規避座標[2], 2000
+			出擊記錄["地圖掃描進度"] = 地圖物件字典["地圖掃描進度"]
+	End Select
+End Function
+
+Function _全盤掃描_鎖定地圖物件(物件列表敘述, 出擊記錄, 初始參數)
+	If 出擊記錄["地圖掃描進度"] = Null Then 
+		TracePrint "開新掃描"
+		_全盤掃描_鎖定地圖物件 = 鎖定地圖物件(物件列表敘述, 初始參數[1], 初始參數[2])
+	Else 
+		TracePrint "遺留掃描結果，繼續掃描"
+		_全盤掃描_鎖定地圖物件 = 鎖定地圖物件(物件列表敘述, 出擊記錄["地圖掃描進度"]["掃描初始參數"], 出擊記錄["地圖掃描進度"]["掃描進度"])
+	End If
+End Function
+
+Function 鎖定地圖物件(物件列表描述, 掃描初始參數, 掃描進度) //掃描進度=(目前深度, 最大深度)
+	Delay 1000
+	Dim 地圖物件字典 = 掃描地圖(掃描進度)
+	TracePrint "印出掃描結果_經過修正"
+	印出列表所有值(地圖物件字典, 1)
+	dim 有沒有地圖物件 = 查詢有沒有地圖物件 (地圖物件字典, 物件列表描述)
+	Dim 策略地圖畫面座標 = 尋找附件座標(畫面特徵表["策略地圖"])
+	dim 水平偏移量 = 掃描初始參數[1], 地圖寬度 = 掃描初始參數[2], 掃描方向 = 掃描初始參數[3], 進度 = 掃描進度[2] - 掃描進度[1]
+	If 有沒有地圖物件 or 進度 < 1 or 策略地圖畫面座標[1] < 0 Then 
+		_鎖定地圖物件_輸出日誌1(有沒有地圖物件, 進度, 策略地圖畫面座標)
+		地圖物件字典["地圖掃描進度"] = {"掃描初始參數" : 掃描初始參數, "掃描進度":掃描進度, "有沒有地圖物件": 有沒有地圖物件}
+		鎖定地圖物件 = 地圖物件字典
+		Exit Function
+	Else 
+		TracePrint "沒目標，繼續掃描"
+		dim 新參數 = _鎖定地圖物件_設定新參數(掃描初始參數, 掃描進度)
+		鎖定地圖物件 = 鎖定地圖物件(物件列表描述, 新參數[1], 新參數[2])
+	End If
+End Function
+
+Function _鎖定地圖物件_設定新參數(掃描初始參數, 掃描進度)
+	Dim 水平偏移量 = 掃描初始參數[1], 地圖寬度 = 掃描初始參數[2], 掃描方向 = 掃描初始參數[3]
+	Select Case 掃描方向
+		Case 0 //地圖校正 
+			調整左下角黑框位置()
+			Dim 目前進度更新 = 0
+			_鎖定地圖物件_設定新參數 = Array(Array(0, 0, 1), Array(目前進度更新, 掃描進度[2]))
+		Case 1 //決定地圖寬度 
+			地圖往左移動 (450)
+			Dim 探索最大寬度 = 地圖寬度 + 1
+			Dim 座標 = 尋找黑框(棋盤範圍, 右下角黑框樣板) 
+			If 座標[1] <= 906 and 座標[1] >= 0 Then 
+				TracePrint "達向右掃描終點，向上掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量 + 1, 探索最大寬度, 2), Array(掃描進度[1] + 1, 掃描進度[2]))
+			Else 
+				TracePrint "未達向右掃描終點，向右掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量 + 1, 探索最大寬度, 1), Array(掃描進度[1] + 1, 掃描進度[2]))
+			End If
+		Case 2
+			地圖往下移動 (550)
+			If (水平偏移量 > 0) Then 
+				TracePrint "達垂直掃描終點，向左掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量, 地圖寬度, 3), Array(掃描進度[1] + 1, 掃描進度[2]))
+			Else 
+				TracePrint "達垂直掃描終點，向右掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量, 地圖寬度, 4), Array(掃描進度[1] + 1, 掃描進度[2]))
+			End If
+		Case 3
+			地圖往右移動 (450)
+			If (水平偏移量 - 1 > 0) Then 
+				TracePrint "未達向左掃描終點，向左掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量 - 1, 地圖寬度, 3), Array(掃描進度[1] + 1, 掃描進度[2]))
+			Else 
+				TracePrint "達向左掃描終點，向上掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量 - 1, 地圖寬度, 2), Array(掃描進度[1] + 1, 掃描進度[2]))
+			End If
+		Case 4
+			地圖往左移動 (450)
+			If (水平偏移量 + 1 < 地圖寬度) Then 
+				TracePrint "未達向右掃描終點，向右掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量 + 1, 地圖寬度, 4), Array(掃描進度[1] + 1, 掃描進度[2]))
+			Else 
+				TracePrint "達向右掃描終點，向上掃描"
+				_鎖定地圖物件_設定新參數 = Array(Array(水平偏移量 + 1, 地圖寬度, 2), Array(掃描進度[1] + 1, 掃描進度[2]))
+			End If
+	End Select
+End Function
+
+Function _鎖定地圖物件_輸出日誌1(有沒有地圖物件, 進度, 地圖物件字典)
+	If 有沒有地圖物件 Then 
+		TracePrint "找到地圖物件，鎖定目標"
+	ElseIf 進度 < 1 Then
+		TracePrint "已達掃描次數極限，無地圖目標物件"
+	ElseIf 地圖物件字典[1] < 0 Then
+		TracePrint "畫面錯誤，不在策略地圖中"
+	End If
+End Function
+
+Function 查詢有沒有地圖物件(地圖物件字典, 物件列表描述)
+	If UBOUND(地圖物件字典[物件列表描述]) > -1 Then 
+		查詢有沒有地圖物件 = True
+	Else 
+		查詢有沒有地圖物件 = False
+	End If
+End Function
+
+Function 選擇目標(敵人選擇優先度, 地圖物件字典)
+	dim 目標座標 = Array(-1, -1)
+	Do
+		Select Case 敵人選擇優先度
+			Case "boss優先"
+				目標座標 = 切換目標魔王為主(地圖物件字典)
+			Case "所有敵人"
+				目標座標 = 切換目標所有敵人為主(地圖物件字典)
+		End Select
+	Loop While (目標座標[1] > -1 and not 檢查敵人的座標是否可點擊(目標座標))
+	選擇目標 = 目標座標
+End Function
+
+Function 切換目標魔王為主(地圖物件字典)
+	If UBOUND(地圖物件字典["魔王列表"]) > -1 Then 
+		切換目標魔王為主 = 地圖物件字典["魔王列表"][1]
+		地圖物件字典["魔王列表"] = Array()
+	ElseIf UBOUND(地圖物件字典["小兵列表"]) > -1 Then
+		切換目標魔王為主 = 地圖物件字典["小兵列表"][1]
+		地圖物件字典["小兵列表"] = 列表刪除座標(地圖物件字典["小兵列表"], 地圖物件字典["小兵列表"][1])
+	Else 
+		切換目標魔王為主 = Array(-1,-1)
+	End If
+End Function
+
+Function 切換目標所有敵人為主(地圖物件字典)
+	If UBOUND(地圖物件字典["小兵列表"]) > -1 Then 
+		切換目標所有敵人為主 = 地圖物件字典["小兵列表"][1]
+		地圖物件字典["小兵列表"] = 列表刪除座標(地圖物件字典["小兵列表"], 地圖物件字典["小兵列表"][1])
+	ElseIf UBOUND(地圖物件字典["魔王列表"]) > -1 Then
+		切換目標所有敵人為主 = 地圖物件字典["魔王列表"][1]
+		地圖物件字典["魔王列表"] = Array()
+	Else 
+		切換目標所有敵人為主 = Array(-1,-1)
+	End If
+End Function
+
+Function 檢查敵人的座標是否可點擊(目標座標)
+	If 目標座標[1] = -1 or 目標座標[1] >= 棋盤範圍["右下角"][1] or 目標座標[2] >= 棋盤範圍["右下角"][2] Then //超過邊界
+		檢查敵人的座標是否可點擊 = False
+	ElseIf 目標座標[1] >= 888 and 目標座標[1] <= 959 and 目標座標[2] >= 297 and 目標座標[2] <= 364 Then //戰略裡
+		檢查敵人的座標是否可點擊 = False
+	ElseIf 目標座標[1] >= 921 and 目標座標[1] <= 959 and 目標座標[2] >= 70 and 目標座標[2] <= 170 Then //三星裡
+		檢查敵人的座標是否可點擊 = False
+	ElseIf 目標座標[1] >= 110 and 目標座標[1] <= 443 and 目標座標[2] >= 50 and 目標座標[2] <= 79 Then //Fleet
+		檢查敵人的座標是否可點擊 = False
+	ElseIf 目標座標[1] >= 109 and 目標座標[1] <= 402 and 目標座標[2] >= 86 and 目標座標[2] <= 120 Then //row down the Fleet 
+		檢查敵人的座標是否可點擊 = False
+	Else 
+		檢查敵人的座標是否可點擊 = True
+	End If
+End Function
+
+Function 掃描地圖(掃描進度)
+	//Dim 菁英小兵列表 = 判斷在不在精英小怪
+	Dim 紅色小兵列表 = 尋找小兵(棋盤範圍,紅色小兵)
+	Dim 黃色小兵列表 = 尋找小兵(棋盤範圍,黃色小兵)
+	Dim 小兵列表 = 合併座標列表(紅色小兵列表, 黃色小兵列表)
+	Dim 魔王列表 = 尋找小兵(棋盤範圍, 魔王)
+	掃描地圖 = {"小兵列表":小兵列表, "魔王列表":魔王列表}
+End Function
+
+Function 尋找小兵(範圍, 小兵特徵)
+	Dim 敵人座標列表 = Array()
+	dim 區塊座標表 = 取得有小兵的區域座標表(範圍, 小兵特徵)
+	敵人座標列表 = 刪除不是小兵的區域座標(區塊座標表, 小兵特徵)
+	尋找小兵 = 敵人座標列表
+End Function
+
+Function 取得有小兵的區域座標表(範圍, 小兵特徵)
+	KeepCapture
+	dim 區域座標列表 = 找所有符合顏色的區域(範圍, 棋盤格長度,小兵特徵["顏色範圍"])
+	ReleaseCapture 
+	區域座標列表 = 排除距離相近的點(區域座標列表, 小兵特徵["大小"])
+	取得有小兵的區域座標表 = 區域座標列表
+End Function
+
+Function 刪除不是小兵的區域座標(區塊座標表, 小兵特徵)
+	dim 新座標表 = Array()
+	For Each 座標 In 區塊座標表
+		If (判斷是不是小兵(座標, 小兵特徵)) Then 
+			dim 新座標 = 座標修正(座標, 小兵特徵["座標修正"])
+			列表插入座標(新座標表, 新座標)
+		End If
+	Next
+	刪除不是小兵的區域座標 = 新座標表
+End Function
+
+Function 判斷是不是小兵(座標, 小兵特徵)
+	dim 新範圍 = 生成合理範圍(座標, 小兵特徵["大小"])
+	dim count = GetColorNum(新範圍["左上角"][1], 新範圍["左上角"][2], 新範圍["右下角"][1], 新範圍["右下角"][2], 小兵特徵["顏色範圍"], 1.0)
+	If not 小兵排除條件(座標, 小兵特徵["排除條件函數"], count) Then 
+		TracePrint "小兵像素點位置", 座標[1]," ", 座標[2], " ", count
+		判斷是不是小兵 = True
+	Else 
+		判斷是不是小兵 = False
+	End If
+End Function
+
+Function 小兵排除條件(座標,排除函數字串, count)
+	Select Case 排除函數字串
+		Case "無小兵排除"
+			小兵排除條件 = 無小兵排除(座標,count) 
+		Case "黃色小兵排除函數"
+			小兵排除條件 = 黃色小兵排除函數 (座標,count)
+		Case "魔王排除函數"
+			小兵排除條件 = 魔王排除函數(座標,count)
+	End Select
+End Function
+
+Function 無小兵排除(座標,count)
+	無小兵排除 = False
+End Function
+
+Function 黃色小兵排除函數(座標, count)
+	If count < 40 or count > 100 or (座標[1] > 931 and 座標[2] > 80 and 座標[2] < 160 )Then 
+		黃色小兵排除函數 = True
+	Else 
+		黃色小兵排除函數 = False
+	End If
+End Function
+
+Function 魔王排除函數(座標,count)
+	If (座標[1] > 110 and 座標[1] < 140 and 座標[2] > 87 and 座標[2] < 117) or count < 魔王["特徵顏色數量"] Then 
+		魔王排除函數 = True
+	Else 
+		魔王排除函數 = False
+	End If
+End Function
+
+Function 關掉查看詳情
+	dim 座標 = 尋找附件座標(查看詳情樣版)
+	If 座標[1] > -1 Then 
+		TracePrint "關掉查看詳情"
+		擬人化點擊(805,334,800)
+	End If
+End Function
+
+Function 尋找右下灰色條(範圍)
+	Dim intX, intY
+	FindPic 範圍["左上角"][1], 範圍["左上角"][2], 範圍["右下角"][1], 範圍["右下角"][2], "Attachment:grayBar.png","110808", 2, 1, intX, intY
+	尋找右下灰色條 = Array(intX, intY)
+End Function
+
+Function 尋找左下灰色條(範圍)
+	Dim intX, intY
+	FindPic 範圍["左上角"][1], 範圍["左上角"][2], 範圍["右下角"][1], 範圍["右下角"][2], "Attachment:grayBar.png","110808", 0, 1, intX, intY
+	尋找左下灰色條 = Array(intX, intY)
+End Function
+
+Function 尋找黑框(範圍, 黑框樣板)
+	//TracePrint "尋找 ", 黑框樣板["特徵圖名稱"]
+	dim 座標, 灰色點掃描方向
+	If 黑框樣板["特徵圖名稱"] = "bar2.png" Then 
+		座標 = 尋找右下灰色條(範圍)
+		灰色點掃描方向 = "左"
+	Else 
+		座標 = 尋找左下灰色條(範圍)
+		灰色點掃描方向 = "右"
+	End If
+	Dim x1 = 座標[1] - 10, y1 = 座標[2] - 黑框樣板["大小"][1] - 4, x2 = 座標[1] + 黑框樣板["大小"][1], y2 = 座標[2] + 黑框樣板["大小"][2]
+	//TracePrint 座標[1], " ", 座標[2], " == ", x1," ", y1," : ", x2," ",y2
+	If not 檢查有沒有灰色條(座標, 灰色點掃描方向) Then 
+		TracePrint "無灰色條"
+		尋找黑框 = Array(-1, -1)
+		Exit Function
+	End If
+	dim 新範圍 = 打包成範圍(x1, y1, x2, y2)
+	dim 黑框座標 = 範圍中尋找附件座標(新範圍, 黑框樣板)
+	//TracePrint "黑框: ", 黑框座標[1], " ", 黑框座標[2]
+	尋找黑框 = 黑框座標
+End Function
+
+Function 檢查有沒有灰色條(座標, 灰色點掃描方向)
+	Dim 灰色數量 = 取得疑似灰色條灰色點數量(座標, 灰色點掃描方向)
+	//TracePrint 灰色數量, " ", 座標[1], " ", 座標[2]
+	If 灰色數量 > 800 Then 
+		檢查有沒有灰色條 = True
+	Else 
+		檢查有沒有灰色條 = False
+	End If
+End Function
+
+Function 取得疑似灰色條灰色點數量(座標, 方向)
+	Dim 灰色數量 = 0, dx
+	If 座標[1] < 0   Then 
+		取得疑似灰色條灰色點數量 = 0
+		Exit Function
+
+	End If
+	If 方向 = "右" Then 
+		dx = 座標[1] + 100
+		If dx > 棋盤範圍["右下角"][1] Then 
+			dx = 棋盤範圍["右下角"][1]
+		End If
+		灰色數量 = GetColorNum(座標[1], 座標[2], dx, 座標[2] + 12, "949694-110808", 1.0)
+	ElseIf 方向 = "左" Then
+		dx = 座標[1] - 100
+		If dx < 棋盤範圍["左上角"][1] Then 
+			dx = 棋盤範圍["左上角"][1]
+		End If
+		灰色數量 = GetColorNum(dx, 座標[2], 座標[1], 座標[2] + 12, "949694-110808", 1.0)
+	End If
+	取得疑似灰色條灰色點數量 = 灰色數量
+End Function
+
+Function 調整水平黑框位置()
+	Dim 座標 = 尋找左下灰色條(棋盤範圍)
+	For 10
+		If 座標[2] >= 450 Then 
+			調整水平黑框位置 = True
+			Exit Function
+		End If
+		Dim 差距 = 450 - 座標[2]
+		If (座標[2] >= 0 and 差距 > 150) Then 
+			地圖往下移動(300)
+		ElseIf (差距 < 8) Then //448
+			地圖往下移動(16)
+		ElseIf(座標[2] >= 0) Then
+			地圖往下移動(2 * 差距)
+		End If
+		dim 新座標 = 尋找左下灰色條(棋盤範圍)
+		
+		If (新座標[2] < 0 and 座標[2] < 0) Then 
+			地圖往上移動 (300)
+		Elseif (新座標[2] < 0) Then 
+			地圖往上移動 (50)
+		End If
+		If (新座標[2] < 0) Then 
+			座標 = 尋找左下灰色條(棋盤範圍)
+		Else 
+			座標 = 新座標
+		End If
+	Next
+	調整水平黑框位置 = False
+End Function
+
+Function 調整左下角黑框位置()
+	If (not 調整水平黑框位置()) Then 
+		TracePrint "調整水平黑框失敗"
+		Exit Function
+	End If
+	Dim 座標 = 尋找黑框(棋盤範圍, 左下角黑框樣板)
+	For 10
+		If 座標[1] <= 123 and 座標[1] >= 0 Then 
+			調整左下角黑框位置 = True
+			Exit Function
+		End If
+		Dim 差距 = 座標[1] - 123
+		If (座標[1] >= 0 and 差距 > 250) Then 
+			地圖往左移動(500)
+		ElseIf (座標[1] >= 0 and 差距 < 8) Then
+			地圖往左移動(16)
+		ElseIf(座標[1] >= 0) Then
+			地圖往左移動(2 * 差距)
+		End If
+		dim 新座標 = 尋找黑框(棋盤範圍, 左下角黑框樣板)
+		If (新座標[1] < 0 and 座標[1] < 0) Then 
+			地圖往右移動 (500)
+		ElseIf (新座標[1] < 0) Then
+			地圖往右移動 (80)
+		End If
+		If (新座標[1] < 0) Then 
+			座標 = 尋找黑框(棋盤範圍, 左下角黑框樣板)
+		Else 
+			座標 = 新座標
+		End If
+	Next
+	調整左下角黑框位置 = False
+End Function
+
+Function 調整右下角黑框位置()
+	If (not 調整水平黑框位置()) Then 
+		TracePrint "調整水平黑框失敗"
+		Exit Function
+	End If
+	Dim 座標 = 尋找黑框(棋盤範圍, 右下角黑框樣板) 
+	For 10
+		If 座標[1] >= 906 and 座標[1] >= 0 Then  //936
+			調整右下角黑框位置 = True
+			Exit Function
+		End If
+		Dim 差距 = 906 - 座標[1]
+		If (座標[1] >= 0 and 差距 > 250) Then 
+			地圖往右移動(500)
+		ElseIf (座標[1] >= 0 and 差距 < 8) Then
+			地圖往右移動(16)
+		ElseIf(座標[1] >= 0) Then
+			地圖往右移動(2 * 差距)
+		End If
+		dim 新座標 = 尋找黑框(棋盤範圍, 右下角黑框樣板)
+
+		If (新座標[1] < 0 and 座標[1] < 0) Then 
+			地圖往左移動 (500)
+		ElseIf (新座標[1] < 0) Then
+			地圖往左移動 (80)
+		End If
+		If (新座標[1] < 0) Then 
+			座標 = 尋找黑框(棋盤範圍, 右下角黑框樣板)
+		Else 
+			座標 = 新座標
+		End If
+	Next
+	調整右下角黑框位置 = False
+End Function
+
+Function 拉到地圖邊緣
+	地圖往右下大移動 (3)
+	地圖往上移動 (325)
+	地圖往左移動 (475 )
+End Function
+
+Function 地圖往右下大移動(i) //i次數
+	Dim offsetX,offsetY
+	Randomize
+	While i > 0
+		offsetX = CInt(Rnd()*10)
+		offsetY = CInt(Rnd()*10)
+		Swipe 121 + offsetX, 129 + offsetY, 935 + offsetY, 476 + offsetX,400	
+		i = i - 1
+		Delay 50
+	Wend
+End Function
+
+Function 地圖往左移動(距離)
+	If 距離 < 8 Then 
+		Exit Function
+	End If
+	Swipe 891, 214, 891 - 距離, 214, 200
+	Delay 300
+End Function
+
+Function 地圖往右移動(距離)
+	If 距離 < 8 Then 
+		Exit Function
+	End If
+	Swipe 134, 163, 134 + 距離, 163, 200
+	Delay 300
+End Function
+
+Function 地圖往上移動(距離)
+	If 距離 < 8 Then 
+		Exit Function
+	End If
+	Swipe 388, 502, 388, 502 - 距離, 200
+	Delay 300
+End Function
+
+Function 地圖往下移動(距離)
+	If 距離 < 8 Then 
+		Exit Function
+	End If
+	Swipe 433, 96, 433, 96 + 距離, 200
+	Delay 300
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    策略地圖操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    戰鬥數據頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 戰鬥數據確定樣版 = {"特徵圖名稱" : "comfirmY.png", "範圍" : 打包成範圍(527,460,896,520), "精度" : 0.8}
+Dim 戰鬥數據確定樣版2 = {"特徵圖名稱" : "battleAgain.png", "範圍" : 打包成範圍(527,460,896,520), "精度" : 0.8}
+
+Function 戰鬥數據點擊繼續()
+	dim 戰鬥數據座標 = 尋找附件座標(戰鬥數據確定樣版)
+	擬人化點擊(戰鬥數據座標[1],戰鬥數據座標[2],800)
+End Function
+
+Function 戰鬥數據點擊繼續2()//共鬥ver
+	dim 戰鬥數據座標 = 尋找附件座標(戰鬥數據確定樣版2)
+	擬人化點擊(戰鬥數據座標[1],戰鬥數據座標[2],800)
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    戰鬥數據頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    獲得道具頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 獲得道具點擊繼續()
+	擬人化點擊(478,176,2000)
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    獲得道具頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    戰鬥評價頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 戰鬥評價點擊繼續()
+	擬人化點擊(27,40,800)
+End Function
+
+Function 切換到戰鬥數據頁面()
+	dim 戰鬥評價座標 = 尋找附件座標(畫面特徵表["戰鬥評價"])
+	If 戰鬥評價座標[1] = -1 Then 
+		Exit Function
+	End If
+	For 10
+		戰鬥評價點擊繼續()
+		戰鬥評價座標 = 尋找附件座標(畫面特徵表["戰鬥數據"])
+		If 戰鬥評價座標[1] > -1 Then 
+			Exit Function
+		End If
+	Next
+End Function
+
+Function 切換到戰鬥數據頁面2()//共鬥ver
+	dim 戰鬥評價座標 = 尋找附件座標(畫面特徵表["戰鬥評價"])
+	If 戰鬥評價座標[1] = -1 Then 
+		Exit Function
+	End If
+	For 10
+		戰鬥評價點擊繼續()
+		戰鬥評價座標 = 尋找附件座標(畫面特徵表["戰鬥數據2"])
+		If 戰鬥評價座標[1] > -1 Then 
+			Exit Function
+		End If
+	Next
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    戰鬥評價頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    出擊等候頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 等候區出擊物件樣板 = 畫面特徵表["出擊等候區"]
+
+Function 船屋是否已滿()
+	
+End Function
+
+Function 石油是否已空()
+	
+End Function
+
+Function 開啟自律戰鬥()
+	
+End Function
+
+Function 開始出擊()
+	dim 出擊物件座標 = 尋找附件座標(等候區出擊物件樣板)
+	擬人化點擊(出擊物件座標[1],出擊物件座標[2], 2000)
+End Function
+
+Function 關閉公告()
+	擬人化點擊(894,45, 2000)
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    出擊等候頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    自動委託腳本    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 自動委託腳本(選項)
+	TracePrint "開始執行自動委託"
+	While True
+		dim 畫面 = 取得現在的畫面()
+		Delay 1000
+		TracePrint "                  "
+		TracePrint "                  "
+		TracePrint "現在的畫面是", 畫面
+		Select Case 畫面
+			Case "首頁"
+				TracePrint "點擊出擊"
+				Call 前往常駐地圖選關()
+			Case "常駐地圖選關"
+				TracePrint "點擊委託任務"
+				Call 前往委託頁面()
+			Case "委託"
+				TracePrint "執行委託"
+				Call 執行委託()
+			Case "帳號登入"
+				TracePrint now(), "被登出，待機一小時，待機完登入"
+				Call 待機一小時()
+				TracePrint now(), "帳號登入"
+				Call 帳號登入()
+			Case "選擇帳戶"
+				TracePrint "登入第一個號"
+				Call 登入第一帳號()
+			Case "遊戲進入畫面"
+				TracePrint "嘗試進入遊戲"
+				Call 嘗試進入遊戲()
+			Case "系統公告"
+				TracePrint "關閉公告"
+				Call 關閉公告()
+		End Select
+	Wend
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    自動委託腳本    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    委託頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 已完成物件樣板 = {"特徵圖名稱" : "cfinish6.png", "範圍" : 打包成範圍(228, 68, 446, 498), "精度" : 0.8}
+Dim 可派出艦隊樣板 = {"特徵圖名稱" : "0-4.png", "範圍" : 打包成範圍(768,5,876,41), "精度" : 0.8}
+Dim 沒在執行委託樣板 = {"特徵圖名稱" : "noIng2.png", "範圍" : 打包成範圍(249,87,464,504), "精度" : 0.8, "大小" : Array(65,18)}
+Dim 委託推薦樣板 = {"特徵圖名稱" : "advice.png", "範圍" : 打包成範圍(646,235,879,291), "精度" : 0.8}
+Dim 委託開始樣板 = {"特徵圖名稱" : "commissionStart.png", "範圍" : 打包成範圍(646,235,879,291), "精度" : 0.8}
+Dim 委託資源消耗訊息樣板 = {"特徵圖名稱" : "comfirm_comission.png", "範圍" : 打包成範圍(519,350,666,410), "精度" : 0.8}
+Dim 委託獎賞資源範圍 = 打包成範圍(463,63,906,522)
+Dim 資源樣板列表 = {"石油1":{"特徵圖名稱" : "oilr1.png", "範圍" : 委託獎賞資源範圍, "精度" : 0.8}}
+資源樣板列表["寶石1"] = {"特徵圖名稱" : "ruby1.png", "範圍" : 委託獎賞資源範圍, "精度" : 0.8}
+資源樣板列表["方塊1"] = {"特徵圖名稱":"cube.png", "範圍":委託獎賞資源範圍, "精度":0.8}
+資源樣板列表["方塊2"] = {"特徵圖名稱":"cube1.png", "範圍":委託獎賞資源範圍, "精度":0.8}
+資源樣板列表["硬幣1"] = {"特徵圖名稱":"coin2.png", "範圍":委託獎賞資源範圍, "精度":0.8}
+資源樣板列表["硬幣2"] = {"特徵圖名稱":"coin3.png", "範圍":委託獎賞資源範圍, "精度":0.8}
+dim 每日資源樣板列表 = 複製字典(資源樣板列表)
+每日資源樣板列表["快建1"] = {"特徵圖名稱":"fastBuild1.png", "範圍":委託獎賞資源範圍, "精度":0.8}
+每日資源樣板列表["快建2"] = {"特徵圖名稱":"fastBuild2.png", "範圍":委託獎賞資源範圍, "精度":0.8}
+
+Function 執行委託()
+	TracePrint "檢查有沒有委託完成"
+	完成已完成的委託()
+	If (not 檢查是不是在委託頁面()) Then 
+		Exit Function
+	End If
+	TracePrint "檢查有沒有委託可以接"
+	For 4
+		If (檢查委託有沒有空位()) Then 
+			TracePrint "還有委託空間，接取新委託"
+			dim 新委託 = 接新的委託()
+			If 新委託 = False Then 
+				TracePrint now(), "沒有可以接的委託，待機半小時"
+				Delay 1000 * 60 * 30
+				Exit Function
+			End If
+		Else 
+			TracePrint now(), " 委託已滿，待機半小時"
+			Delay 1000 * 60 * 30
+			Exit Function
+		End If
+	Next
+End Function
+
+Function 檢查是不是在委託頁面()
+	dim 畫面 = 取得現在的畫面()
+	If 畫面 <> "委託" Then 
+		檢查是不是在委託頁面 = False
+	Else 
+		檢查是不是在委託頁面 = True
+	End If
+End Function
+
+Function 點擊委託空白處(僵直)
+	dim 空白處 = 打包成範圍(87,53,132,480)
+	隨機點擊範圍(空白處, 僵直)
+End Function
+
+Function 前往每日委託分頁()
+	擬人化點擊(39,118, 1200)
+End Function
+
+Function 前往緊急委託分頁()
+	擬人化點擊(40,187, 1200)
+End Function
+
+Function 拉到委託列表底部()
+	Swipe 102, 448,102, 55, 200
+	Delay 1000
+End Function
+
+Function 完成已完成的委託()
+	TracePrint "檢查有沒有每日委託完成"
+	前往每日委託分頁()
+	檢查並完成委託()
+	TracePrint "檢查有沒有緊急委託完成"
+	前往緊急委託分頁()
+	檢查並完成委託()
+End Function
+
+Function 檢查並完成委託()
+	Do
+		dim 委託完成座標 = 檢查有沒有委託完成()
+		If (not 檢查是不是在委託頁面()) Then 
+			Exit Function
+		End If
+		If (委託完成座標[1] > -1) Then 
+			完成委託(委託完成座標)
+		End If
+	Loop While not 比較座標(委託完成座標, Array(-1, -1))
+End Function
+
+Function 檢查有沒有委託完成()
+	dim 座標 = 尋找直到出現附件(已完成物件樣板)
+	If 座標[1] > -1 Then 
+		TracePrint "發現有委託完成",座標[1],座標[2]
+	Else 
+		TracePrint "沒有委託完成"
+	End If
+	檢查有沒有委託完成 = 座標
+End Function
+
+Function 完成委託(委託完成座標)
+	擬人化點擊(委託完成座標[1], 委託完成座標[2], 2000)
+	點擊委託空白處(2000)
+	點擊直到附件出現(87, 53, 畫面特徵表["委託"], 600)
+End Function
+
+Function 檢查委託有沒有空位()
+	dim 可派出艦隊座標 = 尋找附件座標(可派出艦隊樣板)
+	If 可派出艦隊座標[1] = -1 Then 
+		檢查委託有沒有空位 = True
+	Else 
+		檢查委託有沒有空位 = False
+	End If
+End Function
+
+Function 修改委託獎賞資源會出現的y座標(y座標)
+	For Each e In 資源樣板列表
+		e["範圍"]["左上角"][2] = y座標
+	Next
+End Function
+
+Function 修改每日委託獎賞資源會出現的y座標(y座標)
+	For Each e In 每日資源樣板列表
+		e["範圍"]["左上角"][2] = y座標
+	Next
+End Function
+
+Function 接新的委託()
+	TracePrint "前往緊急委託分頁"
+	前往緊急委託分頁()
+	dim 緊急委託 = 接委託("緊急")
+	TracePrint "前往每日委託分頁"
+	前往每日委託分頁()
+	dim 每日委託 = 接委託("每日")
+	If (緊急委託 = False and 每日委託 = False) Then 
+		接新的委託 = False
+	Else 
+		接新的委託 = True
+	End If
+End Function
+
+Function 處理是否消耗資源的要求()
+	dim 確認 = 尋找附件座標(委託資源消耗訊息樣板)
+	擬人化點擊(確認[1],確認[2], 2000)
+End Function
+
+Function 接委託(mode)
+	If not 檢查委託有沒有空位() Then 
+		TracePrint "可派出艦隊已滿"
+		接委託 = False
+		Exit Function
+	End If
+	
+	拉到委託列表底部()
+	Dim 收集列表 = 尋找所有附件座標(沒在執行委託樣板)
+	If 收集列表 = Null Then 
+		TracePrint "沒有發現可以接的委託"
+		接委託 = False
+		Exit Function
+	End If
+	TracePrint "發現可以接的委託，尋找符合的目標資源"
+	修改委託獎賞資源會出現的y座標 (收集列表[1][2] - 52)
+	修改每日委託獎賞資源會出現的y座標(收集列表[1][2] - 52)
+	dim 符合列表
+	If (mode = "每日") Then 
+		符合列表 = 尋找附件列表中符合的附件座標(每日資源樣板列表)
+	Else 
+		符合列表 = 尋找附件列表中符合的附件座標(資源樣板列表)
+	End If
+	If (符合列表 = NULL) Then 
+		TracePrint "沒有發現符合的目標資源"
+		接委託 = False
+		Exit Function
+	End If
+	TracePrint "發現接取委託目標: ", 符合列表[1][1], " ", 符合列表[1][2]
+	
+	點擊那個委託(符合列表[1][1], 符合列表[1][2], 1500)
+	委託推薦成員()
+	開始那個委託()
+	處理是否消耗資源的要求()
+	點擊委託空白處 (1000)
+	接委託 = True
+End Function
+
+Function 點擊那個委託(x, y, t)
+	擬人化點擊(x, y, t)
+End Function
+
+Function 委託推薦成員()
+	dim 座標 = 尋找直到出現附件(委託推薦樣板)
+	擬人化點擊(座標[1], 座標[2], 1000)
+End Function
+
+Function 開始那個委託()
+	dim 座標 = 尋找直到出現附件(委託開始樣板)
+	擬人化點擊(座標[1], 座標[2], 1000)
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    委託頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    常駐地圖選關頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 委託任務物件樣板 = {"特徵圖名稱" : "CommissionA.png", "範圍" : 打包成範圍(673,453,820,536), "精度" : 0.8}
+
+Function 前往委託頁面()
+	Dim 座標 = 尋找直到出現附件(委託任務物件樣板)
+	擬人化點擊(座標[1],座標[2], 1000)
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    常駐地圖選關頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    畫面偵測腳本    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 畫面偵測腳本(選項)
+	TracePrint "開始畫面偵測"
+	While True
+		dim 畫面 = 取得現在的畫面()
+		TracePrint "現在的畫面是 ", 畫面
+		Delay 1000
+	Wend
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    畫面偵測腳本    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    首頁操作    vvvvvvvvvvvvvvvvvvvvvvvv
+Dim 首頁出擊物件樣板 = {"特徵圖名稱" : "mainmenuAnchor.png", "範圍" : 打包成範圍(752,215,865,327), "精度" : 0.8}
+Dim 特別演習物件樣板 = {"特徵圖名稱" : "specialAAA.png", "範圍" : 打包成範圍(428,75,531,372), "精度" : 0.8}
+
+Function 前往常駐地圖選關()
+	dim 座標 = 尋找直到出現附件(首頁出擊物件樣板)
+	擬人化點擊(座標[1], 座標[2], 2000)
+	尋找直到出現附件(畫面特徵表["常駐地圖選關"])
+	Delay 1000
+End Function
+
+Function 前往特別演習()
+	dim 座標 = 尋找附件座標(特別演習物件樣板)
+	擬人化點擊 座標[1], 座標[2], 2000
+	尋找直到出現附件(畫面特徵表["特別作戰"])
+	Delay 1000
+End Function
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    首頁操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    登入頁面操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+Dim 快速登入物件樣板 = {"特徵圖名稱" : "fastLogin.png", "範圍" : 打包成範圍(550,156, 635,189), "精度" : 0.8}
+Dim Google物件樣板 = {"特徵圖名稱" : "google2.png", "範圍" : 打包成範圍(281,378, 324,414), "精度" : 0.8}
+
+Function 待機一小時()
+	Delay 1000*60*60
+End Function
+
+Function 帳號登入()
+	dim 座標 = 尋找直到出現附件(快速登入物件樣板)
+	擬人化點擊(座標[1], 座標[2], 800)
+	座標 = 尋找直到出現附件(Google物件樣板)
+	擬人化點擊(座標[1], 座標[2], 2500)
+	If 座標[1] < 0 Then 
+		TracePrint "找不到 Google Logo"
+	End If
+	
+End Function
+
+Function 登入第一帳號()
+	擬人化點擊(268,304,2500)
+End Function
+
+Function 嘗試進入遊戲()
+	dim 座標 = 尋找附件座標(畫面特徵表["遊戲進入畫面"])
+	擬人化點擊(座標[1], 座標[2], 2500)
+End Function
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    登入頁面操作    vvvvvvvvvvvvvvvvvvvvvvvv
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    選擇模式    vvvvvvvvvvvvvvvvvvvvvvvv
+Function 選擇腳本模式()
+	Dim 新視窗 = "設定腳本模式"
+	Dim 選單1 = "腳本模式"
+	Dim 選單1清單 = Array("撈船", "自動委託", "撈船輔助", "共鬥(特殊演習)", "畫面偵測模式")
+	UI.NewLayout (新視窗)
+	UI.AddTextView 新視窗, "A1", "選擇腳本模式"
+	UI.NewRow 新視窗, "r1"
+	UI.AddRadioGroup(新視窗, 選單1, 選單1清單,0)
+	UI.Show (新視窗)
+	Dim 結果 = UI.GetValue(選單1)
+	TracePrint "使用者選擇的是", 選單1清單(結果[選單1])
+	選擇腳本模式 = 選單1清單(結果[選單1])
+End Function
+
+Function 設定選項(模式)
+	dim 腳本參數 = {"選項" : null},戰鬥選項
+	Select Case 模式
+		Case "撈船"
+			TracePrint "設定撈船選項"
+			dim 撈船選項 = 設定撈船選項()
+			印出列表所有值(撈船選項, 1)
+			TracePrint "設定關卡"
+			dim 關卡選項 = 關卡選擇(撈船選項)
+			印出列表所有值 關卡選項, 1
+			TracePrint "設定戰鬥選項"
+			戰鬥選項  = 設定戰鬥選項()
+			印出列表所有值 戰鬥選項, 1
+			腳本參數 = {"撈船選項":撈船選項, "關卡選項":關卡選項, "戰鬥選項":戰鬥選項}
+		Case "共鬥(特殊演習)"
+			TracePrint "設定共鬥選項"
+			dim 共鬥選項 = 設定共鬥選項()
+			腳本參數 = {"共鬥選項":共鬥選項}
+		Case "撈船輔助"
+			TracePrint "設定撈船輔助選項"
+			dim 撈船輔助選項 = 設定撈船輔助選項()
+			印出列表所有值(撈船輔助選項, 1)
+			If not 撈船輔助選項["手動選敵模式"] Then 
+				TracePrint "設定戰鬥選項"
+				戰鬥選項  = 設定戰鬥選項()
+				印出列表所有值 戰鬥選項, 1
+				腳本參數 = {"撈船選項":撈船輔助選項, "戰鬥選項":戰鬥選項}
+			Else 
+				腳本參數 = {"撈船選項":撈船輔助選項}
+			End If
+		Case Else
+			TracePrint 模式, "不需要設定參數"
+	End Select
+
+	設定選項 = 腳本參數
+End Function
+
+Function 設定共鬥選項()
+	Dim 新視窗 = "共鬥選項設定"
+	Dim 選單1 = "難度選擇"
+	Dim 選單1清單 = Array("E.X.", "困難")
+	Dim 選框1 = "是否執行委託"
+	Dim 文字輸入1 = "執行次數"
+	Dim 選框2 = "是否消耗卷"
+
+	UI.NewLayout (新視窗)
+	UI.AddTextView 新視窗, "A1", "撈船選項"
+	
+	UI.NewRow 新視窗, "r0"
+	UI.AddRadioGroup(新視窗, 選單1, 選單1清單,1)
+	
+	UI.NewRow 新視窗, "r1"
+	UI.AddCheckBox 新視窗, 選框1, "是否執行委託", True
+	
+	UI.NewRow 新視窗, "r3"
+	UI.AddCheckBox 新視窗, 選框2, "是否消耗卷", True
+	
+	UI.NewRow 新視窗, "r2"
+	UI.AddTextView 新視窗, "A2", "執行戰鬥次數，若輸入 -1 一直執行"
+	UI.AddEditText 新視窗, 文字輸入1, "-1"
+
+	UI.Show (新視窗)
+
+	dim 結果 = {選單1 : 取得UI選單的值(UI.GetValue(選單1), 選單1, 選單1清單)}
+	結果[選框1] = 取得UI物件的值(UI.GetValue(選框1), 選框1)
+	結果[選框2] = 取得UI物件的值(UI.GetValue(選框2), 選框2)
+	結果[文字輸入1] = 取得UI物件的值(UI.GetValue(文字輸入1), 文字輸入1)
+	設定共鬥選項 = 結果
+End Function
+
+Function 設定撈船輔助選項()
+	Dim 新視窗 = "撈船輔助選項設定"
+	dim 選框1 = "手動選敵模式"
+	
+	UI.NewLayout (新視窗)
+	UI.AddTextView 新視窗, "A1", "撈船輔助選項"
+	UI.NewRow 新視窗, "r1"
+	UI.AddCheckBox 新視窗, 選框1, "手動選敵模式", False
+	UI.Show (新視窗)
+	dim 結果 = {選框1:取得UI物件的值(UI.GetValue(選框1), 選框1)}
+	設定撈船輔助選項 = 結果
+End Function
+
+Function 設定撈船選項()
+	Dim 新視窗 = "撈船選項設定"
+	Dim 選單1 = "地圖選擇"
+	Dim 選單1清單 = Array("常駐地圖", "活動關卡")
+	Dim 選框1 = "是否執行委託"
+	Dim 選框2 = "船鎢滿是否分解"
+	Dim 文字輸入1 = "執行次數"
+
+	UI.NewLayout (新視窗)
+	UI.AddTextView 新視窗, "A1", "撈船選項"
+	
+	UI.NewRow 新視窗, "r0"
+	UI.AddRadioGroup(新視窗, 選單1, 選單1清單,0)
+	
+	UI.NewRow 新視窗, "r1"
+	UI.AddCheckBox 新視窗, 選框1, "是否執行委託", True
+	
+	UI.NewRow 新視窗, "r3"
+	UI.AddCheckBox 新視窗, 選框2, "船鎢滿是否分解白船，否的話船滿就會暫停腳本", True
+	
+	UI.NewRow 新視窗, "r2"
+	UI.AddTextView 新視窗, "A2", "執行戰鬥次數，若輸入 -1 一直執行"
+	UI.AddEditText 新視窗, 文字輸入1, "-1"
+
+	UI.Show (新視窗)
+
+	dim 結果 = {選單1 : 取得UI選單的值(UI.GetValue(選單1), 選單1, 選單1清單)}
+	結果[選框1] = 取得UI物件的值(UI.GetValue(選框1), 選框1)
+	結果[選框2] = 取得UI物件的值(UI.GetValue(選框2), 選框2)
+	結果[文字輸入1] = 取得UI物件的值(UI.GetValue(文字輸入1), 文字輸入1)
+	設定撈船選項 = 結果
+End Function
+
+Function 設定戰鬥選項()
+	Dim 新視窗 = "戰鬥選項設定"
+	Dim 文字輸入1 = "fleet1_彈藥數量"
+	Dim 文字輸入2 = "fleet2_彈藥數量"
+	Dim 選單1 = "敵人選擇優先度"
+	Dim 選單1清單 = Array("Boss優先", "所有敵人")
+	Dim 文字輸入3 = "打多少小兵出現boss"
+	Dim 選單2 = "選擇哪一隊打先鋒"
+	Dim 選單2清單 = Array("1", "2")
+	
+	UI.NewLayout (新視窗)
+	UI.AddTextView 新視窗, "A1", "戰鬥選項"
+	UI.NewRow 新視窗, "r0"
+	UI.AddTextView 新視窗, "A0", "選擇哪一隊打先鋒"
+	UI.AddRadioGroup 新視窗, 選單2, 選單2清單, 0
+	UI.NewRow 新視窗, "r1"
+	UI.AddTextView(新視窗, "A2", "fleet1 彈藥數量") 	
+	UI.AddEditText 新視窗, 文字輸入1, "5"
+	UI.AddTextView(新視窗, "A3", "fleet2 彈藥數量")
+	UI.AddEditText 新視窗, 文字輸入2, "5"
+
+	UI.NewRow 新視窗, "r2"
+	UI.AddTextView 新視窗, "A4", "敵人選擇優先度"
+	UI.AddRadioGroup 新視窗, 選單1, 選單1清單, 0
+	UI.NewRow 新視窗, "r3"
+	UI.AddTextView(新視窗, "A5", "打多少小兵出現boss")
+	UI.AddEditText 新視窗, 文字輸入3, "5"
+	UI.Show (新視窗)
+	
+	dim 結果 = {選單1 : 取得UI選單的值(UI.GetValue(選單1), 選單1, 選單1清單)}
+	結果[選單2] = 取得UI選單的值(UI.GetValue(選單2), 選單2, 選單2清單)
+	結果[文字輸入1] = 取得UI物件的值(UI.GetValue(文字輸入1), 文字輸入1)
+	結果[文字輸入2] = 取得UI物件的值(UI.GetValue(文字輸入2), 文字輸入2)
+	結果[文字輸入3] = 取得UI物件的值(UI.GetValue(文字輸入3), 文字輸入3)
+	設定戰鬥選項 = 結果
+End Function
+
+Function 關卡選擇(撈船選項)
+	Dim 新視窗 = "關卡選擇"
+	Dim 單選1 = "章節"
+	Dim 單選2 = "關卡"
+	Dim 章節
+	Dim 關卡
+	Dim text1
+
+	If 撈船選項["地圖選擇"] = "常駐地圖" Then 
+		章節 = {章節樣板列表["CH1"]["key"], 章節樣板列表["CH2"]["key"], 章節樣板列表["CH3"]["key"], 章節樣板列表["CH4"]["key"], 章節樣板列表["CH5"]["key"], 章節樣板列表["CH6"]["key"], 章節樣板列表["CH7"]["key"], 章節樣板列表["CH8"]["key"],章節樣板列表["CH9"]["key"],"CH10","CH11","CH12"}
+		關卡 = {"1", "2", "3", "4"}
+		text1 = "常駐關卡選擇"
+	Else 
+		章節 = {章節樣板列表["E.X.1"]["key"],章節樣板列表["E.X.2"]["key"], 章節樣板列表["S.P."]["key"]}
+		關卡 = {"1", "2", "3", "4"}
+		text1 = "活動關卡選擇"
+	End If
+
+	UI.NewLayout (新視窗)
+	UI.AddTextView 新視窗, "A2", text1
+	
+	UI.NewRow 新視窗, "r1"
+	UI.AddTextView(新視窗, "Ch_", "章節") 
+	UI.AddSpinner 新視窗, 單選1, 章節, 0
+	UI.AddTextView(新視窗, "stage", "關卡") 
+	UI.AddSpinner 新視窗, 單選2, 關卡, 0
+	
+	UI.Show (新視窗)
+	
+	dim 結果 = {單選1 : 取得UI選單的值(UI.GetValue(單選1), 單選1, 章節)}
+	結果[單選2] = 取得UI選單的值(UI.GetValue(單選2), 單選2, 關卡)
+	關卡選擇 = 結果
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    選擇模式    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    UI    vvvvvvvvvvvvvvvvvvvvvvvvv
+Function 取得UI選單的值(UI選單物件, 選單名稱, 選單清單)
+	取得UI選單的值 = 選單清單(UI選單物件[選單名稱])
+End Function
+
+Function 取得UI物件的值(UI物件, UI名稱)
+	取得UI物件的值 = UI物件[UI名稱]
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    UI    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    點擊操作    ^^^^^^^^^^^^^^^^^^^^^^^^
+Function 隨機點擊範圍(範圍, 僵直)
+	Randomize
+	Dim seed = TickCount()
+	Dim dx = Abs(範圍["右下角"][1] - 範圍["左上角"][1]), dy = Abs(範圍["右下角"][2] - 範圍["左上角"][2])
+	dx = Int(Rnd() * seed) mod dx
+	dy = Int(Rnd() * seed) mod dy
+	
+	Tap 範圍["左上角"][1] + dx, 範圍["左上角"][2] + dy
+	Delay 僵直
+	
+End Function
+
+Function 擬人化點擊(x, y, 僵直)
+	If x > -1 and y > -1 Then 
+		隨機點擊範圍(生成隨機範圍(x, y, 5), 僵直)
+	End If
+End Function
+
+Function 點擊直到附件出現(x, y, 附件, 僵直)
+	For Int(10000 / 僵直) + 1
+		擬人化點擊(x, y, 僵直)
+		dim 座標 = 尋找附件座標(附件)
+		If 座標[1] > -1 Then 
+			Delay 500
+			Exit Function
+		End If
+	Next
+	TracePrint 附件["特徵圖名稱"], " 沒有出現"
+End Function
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    點擊操作    vvvvvvvvvvvvvvvvvvvvvvvv
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    列表、字典    vvvvvvvvvvvvvvvvvvvvvvvvv
+Function 合併列表(a, b)
+	dim al = UBOUND(a) + 1
+	dim bl = UBOUND(b) + 1
+	dim c()
+	For i = 0 To al - 1
+		c(i) = a(i)
+	Next
+	For j = 0 To bl - 1
+		c(al + j) = b(j)
+	Next
+	合併列表 = c
+End Function
+
+Function 複製字典(A)
+	Dim copied = Array()
+	If IsArray(A) Then 
+		For Each key, e In A
+			If IsArray(e) Then 
+				copied[key] = 複製字典 (e)
+			Else 
+				copied[key] = e
+			End If
+		Next
+		
+		複製字典 = copied
+	End If
+End Function
+
+Function 印出列表所有值(A, layer)
+	If IsArray(A) Then 
+		For Each key, e In A
+			If IsArray(e) Then 
+				TracePrint(_排版(layer), key, ":")
+				印出列表所有值 (e, layer + 1)
+			Else 
+				TracePrint _排版(layer), key, ":", e
+			End If
+		Next
+	End If
+End Function
+
+Function _排版(layer)
+	Dim blank = ""
+	For layer
+		blank = Join(Array(blank, "        "),"")
+	Next
+	_排版 = blank
+End Function
+
+Function 列表中取最小的座標(座標列表)
+	Dim 最小座標 = 座標列表[1]
+	For Each 座標 In 座標列表
+		If 座標[1] < 最小座標[1] and 座標[2] < 最小座標[2] and 座標[1] > -1 and 座標[2] > -1 Then 
+			最小座標 = 座標
+		End If
+	Next
+	列表中取最小的座標 = 最小座標
+End Function
+
+Function 列表中取座標最小的物件(物件列表)
+	Dim 有最小座標的物件 = 物件列表[1]
+	For Each 物件 In 物件列表
+		If 物件["目標座標"][1] <= 有最小座標的物件["目標座標"][1] and 物件["目標座標"][2] <= 有最小座標的物件["目標座標"][2] and 物件["目標座標"][1] > -1 and 物件["目標座標"][2] > -1 Then 
+			有最小座標的物件 = 物件
+		End If
+	Next
+	列表中取座標最小的物件 = 有最小座標的物件
+End Function
+
+Function 修改列表中所有物件的範圍(物件列表, 範圍)
+	For Each 物件 In 物件列表
+		物件["範圍"] = 範圍
+	Next
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    列表、字典    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    找圖、找色    vvvvvvvvvvvvvvvvvvvvvvvvv
+Function 尋找附件座標(附件) //附件名稱包含附檔名
+	尋找附件座標 = 範圍中尋找附件座標(附件["範圍"], 附件)
+End Function
+
+Function 範圍中尋找附件座標(範圍, 附件)
+	Dim intX, intY
+	Dim name = Join(Array("Attachment:", 附件["特徵圖名稱"]),"")
+	Dim 偏色 = 附件["偏色"]
+	If 偏色 = Null Then 
+		偏色 = "000000"
+	End If
+	FindPic 範圍["左上角"][1], 範圍["左上角"][2], 範圍["右下角"][1], 範圍["右下角"][2], name, 偏色, 0, 附件["精度"], intX, intY
+	If intX > -1 And intY > -1 Then 
+		範圍中尋找附件座標 = Array(intX, intY)
+	Else
+		範圍中尋找附件座標 = Array(-1,-1)
+	End If 
+End Function
+
+Function 尋找直到出現附件(附件)
+	For 100
+		dim 座標 = 尋找附件座標(附件)
+		If 座標[1] > -1 Then 
+			尋找直到出現附件 = 座標
+			Exit Function
+		End If
+		Delay 101
+	Next
+	TracePrint 附件["特徵圖名稱"], " 沒有出現"
+	尋找直到出現附件 = Array(-1,-1)
+End Function
+
+Function 等到附件消失(附件)
+	For 100
+		dim 座標 = 尋找附件座標(附件)
+		If 座標[1] = -1 Then 
+			Exit Function
+		End If
+		Delay 101
+	Next
+	TracePrint 附件["特徵圖名稱"], " 沒有消失"
+End Function
+
+Function 尋找附件列表中符合的附件座標(附件列表)
+	dim 符合座標列表 = NULL
+	For Each 附件 In 附件列表
+		dim 附件座標 = 尋找附件座標(附件)
+		If 附件座標[1] > -1 Then 
+			符合座標列表 = 合併列表(符合座標列表,Array(附件座標))
+		End If
+	Next 
+	尋找附件列表中符合的附件座標 = 符合座標列表
+End Function
+
+Function 尋找附件列表中匹配的物件(附件列表)//有名稱的 尋找附件列表中符合的附件座標
+	dim 符合物件列表 = NULL
+	For Each 附件名, 附件 In 附件列表
+		dim 附件座標 = 尋找附件座標(附件)
+		If 附件座標[1] > -1 Then 
+			dim 新物件 = 複製字典(附件)
+			新物件["目標座標"] = 附件座標
+			新物件["物件名稱"] = 附件名
+			符合物件列表 = 合併列表(符合物件列表,Array(新物件))
+		End If
+	Next
+	尋找附件列表中匹配的物件 = 符合物件列表
+End Function
+
+Function 尋找列表中所有附件座標(附件列表)
+	Dim 代表物件
+	For Each 附件 In 附件列表
+		代表物件 = 附件["範圍"]
+		Exit For
+	Next
+	If not (代表物件["左上角"][1] < 代表物件["右下角"][1] and 代表物件["左上角"][2] < 代表物件["右下角"][2]) Then 
+		尋找列表中所有附件座標 = Null
+		Exit Function
+	End If 
+	dim 附件座標列表 = 尋找附件列表中匹配的物件(附件列表)
+	If (附件座標列表 = Null) Then 
+		尋找列表中所有附件座標 = Null
+		Exit Function
+	End If
+	Dim 目標物件 = 附件座標列表[1]
+	Dim A = 目標物件["範圍"]["左上角"]
+	Dim B = 目標物件["範圍"]["右下角"]
+	Dim p = 目標物件["目標座標"]
+	Dim C = Array(p[1] + 目標物件["大小"][1],                       p[2])
+	Dim D = Array(                      p[1], p[2] + 目標物件["大小"][2])
+	Dim E = Array(A[1], D[2])
+	Dim F = Array(C[1], B[2])
+	Dim G = Array(D[1], A[2])
+	Dim H = Array(B[1], C[2])
+	dim 範圍1 = 打包成範圍(A[1],A[2],D[1],D[2])
+	dim 範圍2 = 打包成範圍(G[1],G[2],H[1],H[2])
+	dim 範圍3 = 打包成範圍(C[1],C[2],B[1],B[2])
+	dim 範圍4 = 打包成範圍(E[1],E[2],F[1],F[2])
+	Dim 新附件列表R1 = 複製字典(附件列表)
+	Dim 新附件列表R2 = 複製字典(附件列表)
+	Dim 新附件列表R3 = 複製字典(附件列表)
+	Dim 新附件列表R4 = 複製字典(附件列表)
+	修改列表中所有物件的範圍(新附件列表R1, 範圍1)
+	修改列表中所有物件的範圍(新附件列表R2, 範圍2)	
+	修改列表中所有物件的範圍(新附件列表R3, 範圍3)
+	修改列表中所有物件的範圍(新附件列表R4, 範圍4)
+	Dim r0 = Array(p)
+	dim r1 = 尋找列表中所有附件座標 (新附件列表R1)
+	dim r2 = 尋找列表中所有附件座標 (新附件列表R2)
+	dim r3 = 尋找列表中所有附件座標 (新附件列表R3)
+	dim r4 = 尋找列表中所有附件座標 (新附件列表R4)
+	If r1 <> Null Then 
+		r0 = 合併列表(r0, r1)
+	End If
+	If r2 <> Null Then 
+		r0 = 合併列表(r0, r2)
+	End If
+	If r3 <> Null Then 
+		r0 = 合併列表(r0, r3)
+	End If
+	If r4 <> Null Then 
+		r0 = 合併列表(r0, r4)
+	End If
+	尋找列表中所有附件座標 = r0
+End Function
+
+Function 尋找所有附件座標(附件)
+	If not (附件["範圍"]["左上角"][1] < 附件["範圍"]["右下角"][1] and 附件["範圍"]["左上角"][2] < 附件["範圍"]["右下角"][2]) Then 
+		尋找所有附件座標 = Null
+		Exit Function
+	End If 
+	dim 附件座標 = 尋找附件座標(附件)
+	If (附件座標[1] < 0) Then 
+		尋找所有附件座標 = Null
+		Exit Function
+	End If
+	Dim 新附件R1 = 複製字典(附件)
+	新附件R1["範圍"] = 打包成範圍(附件座標[1] + 附件["大小"][1], 附件座標[2], 附件["範圍"]["右下角"][1], 附件["範圍"]["右下角"][2])
+	Dim 新附件R2 = 複製字典(附件)
+	新附件R2["範圍"] = 打包成範圍(附件["範圍"]["左上角"][1], 附件座標[2] + 附件["大小"][2], 附件座標[1] + 附件["大小"][1],  附件["範圍"]["右下角"][2])
+	Dim r0 = Array(附件座標)
+	dim r1 = 尋找所有附件座標 (新附件R1)
+	dim r2 = 尋找所有附件座標 (新附件R2)
+	If r1 <> Null Then 
+		r0 = 合併列表(r0, r1)
+	End If
+	If r2 <> Null Then 
+		r0 = 合併列表(r0, r2)
+	End If
+	尋找所有附件座標 = r0
+End Function
+
+Function 尋找顏色(範圍, 顏色)
+	Dim intX, intY
+	FindColor 範圍["左上角"][1], 範圍["左上角"][2], 範圍["右下角"][1], 範圍["右下角"][2], 顏色, 0, 1, intX, intY
+	If intX > -1 And intY > -1 Then 
+		尋找顏色 = Array(intX, intY)
+	Else 
+		尋找顏色 = Array(-1, -1)
+	End If
+End Function
+
+Function 找所有符合顏色的區域(範圍, 長度, 顏色)//把畫面切i*j塊在個別去找色
+	Dim 區域座標列表 = Array()
+	Dim i = 範圍["左上角"][1], j = 範圍["左上角"][2]
+	While i < 範圍["右下角"][1]
+		j = 範圍["左上角"][2]
+		While j < 範圍["右下角"][2]
+			Dim ix = i + 長度, jx = j + 長度
+			If ix > 範圍["右下角"][1] Then 
+				ix = 範圍["右下角"][1]
+			End If
+			If jx > 範圍["右下角"][2]Then 
+				jx = 範圍["右下角"][2]
+			End If
+			dim 找色範圍 = 打包成範圍(i, j, ix, jx)
+			dim 座標 = 尋找顏色(找色範圍, 顏色)
+			列表插入座標(區域座標列表, 座標)
+			j = j + 長度
+		Wend
+		i = i + 長度
+	Wend
+	找所有符合顏色的區域 = 區域座標列表
+End Function
+
+/*
+Function 尋找所有附件座標(附件)
+	If not (附件["範圍"]["左上角"][1] < 附件["範圍"]["右下角"][1] and 附件["範圍"]["左上角"][2] < 附件["範圍"]["右下角"][2]) Then 
+		尋找所有附件座標 = Null
+		Exit Function
+	End If 
+	dim 附件座標 = 尋找附件座標(附件)
+	If (附件座標[1] < 0) Then 
+		尋找所有附件座標 = Null
+		Exit Function
+	End If
+	Dim 新附件R1 = 複製字典(附件)
+	新附件R1["範圍"] = 打包成範圍(附件座標[1] + 附件["大小"][1], 附件座標[2], 附件["範圍"]["右下角"][1], 附件座標[2] + 附件["大小"][2])
+	Dim 新附件R2 = 複製字典(附件)
+	新附件R2["範圍"] = 打包成範圍(附件座標[1] + 附件["大小"][1], 附件座標[2] + 附件["大小"][2], 附件["範圍"]["右下角"][1],  附件["範圍"]["右下角"][2])
+	Dim 新附件R3 = 複製字典(附件)
+	新附件R3["範圍"] = 打包成範圍(附件座標[1], 附件座標[2] + 附件["大小"][2], 附件座標[1] + 附件["大小"][1],  附件["範圍"]["右下角"][2])
+	Dim r0 = Array(附件座標)
+	dim r1 = 尋找所有附件座標 (新附件R1)
+	dim r2 = 尋找所有附件座標 (新附件R2)
+	dim r3 = 尋找所有附件座標 (新附件R3)
+	If r1 <> Null Then 
+		r0 = 合併列表(r0, r1)
+	End If
+	If r2 <> Null Then 
+		r0 = 合併列表(r0, r2)
+	End If
+	If r3 <> Null Then 
+		r0 = 合併列表(r0, r3)
+	End If
+	尋找所有附件座標 = r0
+End Function*/
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    找圖、找色    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    座標、範圍    vvvvvvvvvvvvvvvvvvvvvvvvv
+Function 打包成範圍(x1, y1, x2, y2)
+	打包成範圍 = {"左上角" : Array(x1, y1), "右下角" : Array(x2, y2)}
+End Function
+
+Function 生成隨機範圍(x1, y1, r)
+	生成隨機範圍 = 打包成範圍(x1, y1, x1+r, y1+r)
+End Function
+
+Function 生成合理範圍(座標, r)//已座標為中心點產生半徑r的範圍
+	dim 左上角 = Array(座標[1] - r, 座標[2] - r)
+	If 座標[1] - r < 0 Then 
+		左上角[1] = 0
+	End If
+	If 座標[2] - r < 0 Then 
+		左上角[2] = 0
+	End If
+	dim 右下角 = Array(座標[1] + r, 座標[2] + r)
+	If 座標[1] + r > 右下角最大邊界值[1]  Then 
+		右下角[1] = 右下角最大邊界值[1]
+	End If
+	If 座標[2] - r > 右下角最大邊界值[2] Then 
+		右下角[2] = 右下角最大邊界值[2]
+	End If
+	生成合理範圍 = {"左上角":左上角, "右下角" : 右下角}
+End Function
+
+Function 合併座標列表(列表A, 列表B)
+	dim 新列表 = Array()
+	Dim 合併表 = Array(列表A, 列表B)
+	Dim i = 1
+	For Each e In 合併表
+		If UBOUND(e) > -1 Then 
+			For Each ee In e
+				新列表[i] = ee
+				i = i + 1
+			Next
+		End If
+	Next
+	合併座標列表 = 新列表
+End Function
+
+Function 列表插入座標(列表, 座標)
+	If 座標[1] = -1 or 座標[2] = -1 Then 
+		Exit Function
+	End If
+	dim le = UBOUND(列表) + 1
+	列表[le + 1] = 座標
+End Function
+
+Function 列表刪除座標(列表, 目標座標)
+	dim 新列表 = Array()
+	If UBOUND(列表) = -1 Then 
+		Exit Function
+	End If
+	For Each 座標 In 列表
+		If 目標座標[1] <> 座標[1] or 目標座標[2] <> 座標[2] Then 
+			列表插入座標(新列表, 座標) 
+		End If
+	Next
+	列表刪除座標 = 新列表
+End Function
+
+Function 座標修正(座標, 修正向量)
+	Dim 新座標 = Array(-1,-1)
+	If 座標[1] < 0 or 座標[2] < 0 Then 
+		座標修正 = 新座標
+	Else 
+		新座標[1] = 座標[1] + 修正向量[1]
+		新座標[2] = 座標[2] + 修正向量[2]
+	End If
+	If 新座標[1] < 0 or 新座標[2] < 0 Then 
+		新座標 = Array(-1,-1)
+	End If
+	座標修正 = 新座標
+End Function
+
+Function 比較座標(A, B)
+	If (UBound(A) + 1 <> 2 or UBound(B) + 1 <> 2) Then 
+		比較座標 = False
+		Exit Function
+	End If
+	If (A[1] = B[1] and A[2] = B[2]) Then 
+		比較座標 = True
+	Else 
+		比較座標 = False
+	End If
+End Function
+
+Function 計算兩點距離平方(座標1, 座標2)
+	dim dx = 座標1[1] - 座標2[1]
+	Dim dy = 座標1[2] - 座標2[2]
+	計算兩點距離平方 = dx*dx + dy*dy
+End Function
+
+Function 排除距離相近的點(座標列表, 距離)
+	If 座標列表 = Null Then 
+		Exit Function
+	End If
+	Dim i = 0
+	dim 新列表 = Array()
+	dim 整理的座標表 = 刪除座標列表中距離相近的點(座標列表, 距離)
+	While UBound(整理的座標表[2]) + 1 > 0 
+		新列表(i) = 整理的座標表[1]
+		整理的座標表 = 刪除座標列表中距離相近的點(整理的座標表[2], 距離)
+		i = i + 1
+	Wend
+	新列表(i) = 整理的座標表[1]
+	排除距離相近的點 = 新列表
+End Function
+
+Function 刪除座標列表中距離相近的點(座標列表, 距離)
+	dim 新列表 = Array(座標列表(0))
+	Dim 剩餘座標表 = Array()
+	Dim id = 0
+	For i = 1 To UBound(座標列表)
+		If 計算兩點距離平方(新列表(0), 座標列表(i)) > 距離 * 距離 Then 
+			剩餘座標表(id) = 座標列表(i)
+			id = id + 1
+		End If
+	Next
+	新列表(1) = 剩餘座標表
+	刪除座標列表中距離相近的點 = 新列表
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    座標、範圍    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//vvvvvvvvvvvvvvvvvvvvvvvvvvv    畫面    vvvvvvvvvvvvvvvvvvvvvvvvv
+Function 取得現在的畫面()
+	Dim 目前畫面 = 取得當下畫面()
+	If 目前畫面 = -1 Then //重複確認
+		Delay 3000
+		目前畫面 = 取得當下畫面()
+	End If
+	取得現在的畫面 = 目前畫面
+End Function
+
+Function 取得當下畫面()
+	dim 特徵物件座標列表 = Array()
+	Dim 畫面列表 = Array()
+	For Each 畫面名稱 ,特徵附件 In 畫面特徵表
+		Dim 特徵物件座標 = 尋找附件座標(特徵附件)
+		If 特徵物件座標[1] > -1 Then 
+			特徵物件座標列表 = 合併列表(特徵物件座標列表, Array(特徵物件座標))
+			畫面列表 = 合併列表(畫面列表, Array(畫面名稱))
+		End If
+	Next
+	If UBOUND(特徵物件座標列表) = 0 Then 
+		取得當下畫面 = 畫面列表[1]
+	ElseIf UBOUND(特徵物件座標列表) > 0 Then
+		TracePrint "判斷非唯一的畫面，建議找出畫面唯一的特徵圖，找到的畫面如下"
+		印出列表所有值 (畫面列表, 1)
+		取得當下畫面 = -1
+	Else 
+		取得當下畫面 = -1
+	End If
+End Function
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^    畫面    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Call main()
